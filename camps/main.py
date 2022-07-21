@@ -13,10 +13,13 @@ from datetime import datetime, date, timedelta
 import numpy as np
 from collections import OrderedDict
 from dateutil.relativedelta import relativedelta
+from pathlib import Path
+from filesplit.merge import Merge as file_merge
 
-MAPS_1938 = r'clean_1938_maps_2pt.geojson'
-GERMAN_BORDERS = r'german_borders.gpkg'
-CAMPS='clean_ss_camps_2pt_v2.gpkg'
+MAPS_1938 = r'data/clean_1938_maps_2pt.geojson'
+GERMAN_BORDERS = r'data/german_borders.gpkg'
+GERMAN_BORDERS_SPLIT=r'data/german_borders'
+CAMPS=r'data/clean_ss_camps_2pt_v2.gpkg'
 _crs = "+proj=tpeqd +lat_1=48 +lon_1=2 +lat_2=48 +lon_2=21"
 
 # Data sources ---------------------------------------------------------------------------------------------------------
@@ -26,6 +29,10 @@ with open(MAPS_1938,'r') as f:
 _gsrc_1938 = GeoJSONDataSource(geojson=json.dumps(data))
 
 # Load the map borders
+if not Path(GERMAN_BORDERS).is_file():
+    merge=file_merge(GERMAN_BORDERS_SPLIT,str(Path(GERMAN_BORDERS).parent),Path(GERMAN_BORDERS).name)
+    merge.merge()
+
 _gdf_german_borders = gpd.read_file(GERMAN_BORDERS)
 if isinstance(_gdf_german_borders['date'].loc[0],str):
     _gdf_german_borders['date'] = pd.to_datetime(_gdf_german_borders['date'],format='%Y-%m-%dT%H:%M:%S')
