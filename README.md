@@ -1,2 +1,4 @@
-# nazi_concentration_camps
-Bokeh animation of Nazi concentration camps during World War II
+# German concentration camps during WWII
+
+This is a Bokeh animation of Nazi concentration camps during World War II.
+

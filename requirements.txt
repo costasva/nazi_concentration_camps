@@ -1,0 +1,6 @@
+geopandas~=0.9.0
+pandas~=1.4.3
+numpy~=1.22.3
+bokeh~=2.4.3
+python-dateutil~=2.8.2
+filesplit~=4.0.0
